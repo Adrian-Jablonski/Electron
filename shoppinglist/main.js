@@ -4,6 +4,9 @@ const path = require('path');
 
 const { app, BrowserWindow, Menu, ipcMain } = electron;
 
+// SET ENV
+process.env.NODE_ENV = 'production';    // Removes dev tools from app
+
 let mainWindow;
 let addWindow;
 

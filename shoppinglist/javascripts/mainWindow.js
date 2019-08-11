@@ -5,8 +5,9 @@ const ul = document.querySelector('ul');
 
 // Gets add item that is sent from main.js
 ipcRenderer.on('item:add', function(e, item) {  
-    console.log(item);
+    ul.className = 'collection';
     const li = document.createElement('li');
+    li.className = 'collection-item';
     const itemText = document.createTextNode(item);
     li.appendChild(itemText);
     ul.appendChild(li);
@@ -15,4 +16,15 @@ ipcRenderer.on('item:add', function(e, item) {
 // Clear items
 ipcRenderer.on('item:clear', function() {  
     ul.innerHTML = '';
+    ul.className ='';
 })
+
+// Remove item
+ul.addEventListener('dblclick', removeItem);
+
+function removeItem(e) {
+    e.target.remove();
+    if (ul.children.length == 0) {
+        ul.className ='';
+    }
+}
