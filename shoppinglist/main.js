@@ -2,25 +2,30 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 
-const {app, BrowserWindow, Menu} = electron;
+const { app, BrowserWindow, Menu, ipcMain } = electron;
 
 let mainWindow;
 let addWindow;
 
 // Listen for app to be ready
-app.on('ready', function() {
+app.on('ready', function () {
     // Create new window
-    mainWindow = new BrowserWindow({});
+    mainWindow = new BrowserWindow({
+        webPreferences: {
+            nodeIntegration: true   // Fixes require is not defined error
+        }
+    });
 
     // Load html into window
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'windows/mainWindow.html'),
         protocol: 'file:',
-        slashes: true
+        slashes: true,
+
     }));
 
     // Quit app and close all windows when main window is closed
-    mainWindow.on('closed', function() {
+    mainWindow.on('closed', function () {
         app.quit();
     })
 
@@ -35,7 +40,10 @@ function createAddWindow() {
     addWindow = new BrowserWindow({
         width: 300,
         height: 200,
-        title: 'Add Shopping List Item'
+        title: 'Add Shopping List Item',
+        webPreferences: {
+            nodeIntegration: true   // Fixes require is not defined error
+        }
     });
 
     // Load html into window
@@ -46,11 +54,17 @@ function createAddWindow() {
     }));
 
     // Garbage collection handle
-    addWindow.on('close', function() {
+    addWindow.on('close', function () {
         addWindow = null;
     })
 
 }
+
+// Catch item:add from ipcRenderer in addWindow script
+ipcMain.on('item:add', function(e, item) {
+    mainWindow.webContents.send('item:add', item);  // Sends item to the main window
+    addWindow.close();
+})
 
 // Create menu template
 const mainMenuTemplate = [
@@ -65,6 +79,9 @@ const mainMenuTemplate = [
             },
             {
                 label: 'Clear Items',
+                click() {
+                    mainWindow.webContents.send('item:clear');
+                }
             },
             {
                 label: 'Quit',
@@ -89,7 +106,7 @@ if (process.env.NODE_ENV !== 'production') {
         submenu: [
             {
                 label: 'Toggle DevTools',
-                accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I', 
+                accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
                 click(item, focusedWindow) {
                     focusedWindow.toggleDevTools();
                 }
