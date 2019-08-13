@@ -1,10 +1,10 @@
 import React from 'react';
-import './stylesheets/App.css';
+import GameBoard from './components/GameBoard'
 
 function App() {
   return (
     <div className="App">
-      <p>React APP</p>
+      <GameBoard></GameBoard>
     </div>
   );
 }

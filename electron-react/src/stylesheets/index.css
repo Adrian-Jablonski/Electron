@@ -1,13 +1,18 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+div#gameboard {
+  margin: 0 auto;
+  height: 400px;
+  width: 400px;
+  border: 2px solid black;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+div.board-row {
+  height: 40px;
+  width: 100%;
 }
+
+button.board-spot {
+  height: 40px;
+  width: 40px;
+  border: 1px dashed black;
+}
+/*# sourceMappingURL=index.css.map */

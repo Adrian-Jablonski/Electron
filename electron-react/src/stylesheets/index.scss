@@ -1,0 +1,17 @@
+div#gameboard {
+    margin: 0 auto;
+    height: 400px;
+    width: 400px;
+    border: 2px solid black;
+}
+
+div.board-row {
+    height: 40px;
+    width: 100%;
+}
+
+button.board-spot {
+    height: 40px;
+    width: 40px;
+    border: 1px dashed black;
+}
