@@ -1,7 +1,7 @@
 div#gameboard {
     margin: 0 auto;
-    height: 400px;
-    width: 400px;
+    height: 440px;
+    width: 440px;
     border: 2px solid black;
 }
 
@@ -10,8 +10,39 @@ div.board-row {
     width: 100%;
 }
 
-button.board-spot {
+button.spot {
     height: 40px;
     width: 40px;
+    font-weight: bolder;
+}
+
+button.board-spot {
+    font-size: 14px;
     border: 1px dashed black;
+    color: #0077be;
+    background-color: #0077be;
+}
+
+button.board-heading{
+    font-size: 16px;
+    border: 2px solid black;
+    background-color: #474747;
+}
+
+button.board-spot:hover {
+    border: 1px dashed black;
+    background-color: blue;
+} 
+
+button.spot-hit {
+    font-size: 16px;
+    background-color: red;
+}
+
+button.spot-hit:before { 
+    content: "X";
+}
+
+button.spot-miss {
+    background-color: grey;
 }
