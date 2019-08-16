@@ -14,8 +14,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "mocha",
+    "test-watch-fail" : "mocha --reporter min --watch ./test ./",
     "eject": "react-scripts eject",
-    "electron-dev": "concurrently \"SET BROWSER=none && yarn start\" \"wait-on http://localhost:3000 && electron .\""
+    "electron-dev": "concurrently \"SET BROWSER=none&&yarn start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "main": "public/electron.js",
   "eslintConfig": {
@@ -37,6 +38,7 @@
     "concurrently": "^4.1.1",
     "electron": "^6.0.2",
     "electron-builder": "^21.2.0",
+    "electron-prebuilt": "^1.4.13",
     "wait-on": "^3.3.0"
   }
 }

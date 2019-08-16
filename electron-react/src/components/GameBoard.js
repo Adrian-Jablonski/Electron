@@ -25,6 +25,8 @@ class GameBoard extends Component {
 
             console.log("Spot Clicked " + spot);
 
+            //TODO: Add if spot on board has a ship placed on it. Then change spot status based on if spot has ship or is empty
+
             this.setState(prevState => ({
                 board: {
                     ...prevState.board,
