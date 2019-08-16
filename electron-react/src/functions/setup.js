@@ -37,8 +37,19 @@ function setColLetter(col) {
     return String.fromCharCode(col + 64);
 }
 
+function returnRandomNumb(numb) {
+    return Math.ceil(Math.random() * numb);
+}
+
+function returnRandomShipPositions() {
+
+}
+
+// Ship len; 5, 4, 3, 3, 2
+
 module.exports = {
     setSpotText,
     setSpotClassName,
-    setColLetter
+    setColLetter,
+    returnRandomNumb
 }

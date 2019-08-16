@@ -3,6 +3,7 @@ div#gameboard {
   height: 440px;
   width: 440px;
   border: 2px solid black;
+  background-image: url("../assets/images/ocean3.png");
 }
 
 div.board-row {
@@ -20,7 +21,7 @@ button.board-spot {
   font-size: 14px;
   border: 1px dashed black;
   color: #0077be;
-  background-color: #0077be;
+  background-color: rgba(0, 120, 190, 0.3);
 }
 
 button.board-heading {
@@ -31,12 +32,12 @@ button.board-heading {
 
 button.board-spot:hover {
   border: 1px dashed black;
-  background-color: blue;
+  background-color: rgba(0, 0, 255, 0.4);
 }
 
 button.spot-hit {
   font-size: 16px;
-  background-color: red;
+  background-color: rgba(255, 0, 0, 0.7);
 }
 
 button.spot-hit:before {
@@ -44,8 +45,9 @@ button.spot-hit:before {
 }
 
 button.spot-miss {
-  background-color: grey;
+  background-color: rgba(0, 0, 0, 0);
   color: grey;
+  border: none;
 }
 
 button.spot-miss:before {

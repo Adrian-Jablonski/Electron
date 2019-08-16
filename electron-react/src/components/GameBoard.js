@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import BoardRow from './BoardRow';
 
+const returnRandomNumb = require('../functions/setup').returnRandomNumb;
+
 class GameBoard extends Component {
     state = {
         board: []
@@ -13,7 +15,7 @@ class GameBoard extends Component {
                 const colLetter = String.fromCharCode(j + 64);
                 board[colLetter + i] = {
                     "status": null,
-                    "hasShip" : returnRandomNumb() === 1 
+                    "hasShip" : returnRandomNumb(2) === 1 
                 }
             }
         }
@@ -58,7 +60,3 @@ class GameBoard extends Component {
 }
 
 export default GameBoard;
-
-function returnRandomNumb() {
-    return Math.floor(Math.random() * 2);
-}
