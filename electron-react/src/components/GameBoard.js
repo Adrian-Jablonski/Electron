@@ -12,7 +12,8 @@ class GameBoard extends Component {
             for (let j = 1; j <= 10; j++) {
                 const colLetter = String.fromCharCode(j + 64);
                 board[colLetter + i] = {
-                    "status": null
+                    "status": null,
+                    "hasShip" : returnRandomNumb() === 1 
                 }
             }
         }
@@ -25,14 +26,12 @@ class GameBoard extends Component {
 
             console.log("Spot Clicked " + spot);
 
-            //TODO: Add if spot on board has a ship placed on it. Then change spot status based on if spot has ship or is empty
-
             this.setState(prevState => ({
                 board: {
                     ...prevState.board,
                     [spot]: {
                         ...prevState.board[spot],
-                        status: 'Hit'
+                        status: (prevState.board[spot].hasShip) ? 'Hit' : 'Miss'
                     }
                 }
             }));
@@ -59,3 +58,7 @@ class GameBoard extends Component {
 }
 
 export default GameBoard;
+
+function returnRandomNumb() {
+    return Math.floor(Math.random() * 2);
+}

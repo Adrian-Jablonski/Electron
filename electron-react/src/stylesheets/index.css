@@ -45,5 +45,10 @@ button.spot-hit:before {
 
 button.spot-miss {
   background-color: grey;
+  color: grey;
+}
+
+button.spot-miss:before {
+  content: ".";
 }
 /*# sourceMappingURL=index.css.map */
