@@ -3,6 +3,7 @@ const expect = require("chai").expect;
 const setSpotText = require('../src/functions/setup').setSpotText;
 const setSpotClassName = require('../src/functions/setup').setSpotClassName;
 const setColLetter = require('../src/functions/setup').setColLetter;
+const returnRandomShipPositions = require('../src/functions/setup').returnRandomShipPositions;
 
 describe('Setup', function() {
     it('Set spot text for Row Headings', function() {
@@ -41,5 +42,11 @@ describe('Setup', function() {
         expect(setColLetter(8)).to.equal('H');
         expect(setColLetter(10)).to.equal('J');
     });
+
+    describe('Random Ship Position Tests', function() { 
+        it('Expect there to be the correct number of spots', function() {
+            expect(returnRandomShipPositions()).to.have.lengthOf(17);
+        })
+    })
     
 });
