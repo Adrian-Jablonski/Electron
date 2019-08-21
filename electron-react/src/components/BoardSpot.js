@@ -6,7 +6,7 @@ const setSpotClassName = require('../functions/setup').setSpotClassName;
 class BoardSpot extends Component {
 
     mouseHover(e) {
-        console.log("Hovering on ")
+        //console.log("Hovering on ")
     }
 
     render() {

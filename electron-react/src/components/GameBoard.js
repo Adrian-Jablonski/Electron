@@ -10,6 +10,32 @@ class GameBoard extends Component {
     }
 
     componentWillMount() {
+        this.restartGame();
+    }
+
+    clickSpot = (spotClassName, spot) => {
+        if (spotClassName === 'board-spot') {
+
+            this.setState(prevState => ({
+                board: {
+                    ...prevState.board,
+                    [spot]: {
+                        ...prevState.board[spot],
+                        status: (prevState.board[spot].hasShip) ? 'Hit' : 'Miss'
+                    }
+                }
+            }));
+        }
+    }
+
+    revealAll = () => {
+        let boardLen = document.getElementsByClassName("board-spot").length;
+        for (let i = 0; i < boardLen; i++) {
+            document.getElementsByClassName("board-spot")[i].click();
+        }
+    }
+
+    restartGame = () => {
         const spotsTaken = returnRandomShipPositions().sort();
         console.log(spotsTaken)
         let board = {};
@@ -24,23 +50,6 @@ class GameBoard extends Component {
         }
 
         this.setState({ board });
-    }
-
-    clickSpot = (spotClassName, spot) => {
-        if (spotClassName === 'board-spot') {
-
-            console.log("Spot Clicked " + spot);
-
-            this.setState(prevState => ({
-                board: {
-                    ...prevState.board,
-                    [spot]: {
-                        ...prevState.board[spot],
-                        status: (prevState.board[spot].hasShip) ? 'Hit' : 'Miss'
-                    }
-                }
-            }));
-        }
     }
 
     render() {
@@ -58,6 +67,13 @@ class GameBoard extends Component {
             <div>
                 <div id="gameboard">
                     {boardRowArr}
+                </div>
+                <div>
+                    <button onClick={() => this.restartGame()}>Restart Game</button>
+                </div>
+                <br></br>
+                <div>
+                    <button onClick={() => this.revealAll()}>Reveal All</button>
                 </div>
             </div>
         )
