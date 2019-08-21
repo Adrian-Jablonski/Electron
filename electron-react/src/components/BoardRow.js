@@ -13,6 +13,7 @@ class BoardRow extends Component {
                 spotData = board[String.fromCharCode(i + 64) + "" + row];
             }
             boardSpotArr.push(<BoardSpot
+                key={i}
                 row={row}
                 col={i}
                 spotData={spotData}

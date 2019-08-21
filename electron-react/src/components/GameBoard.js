@@ -57,6 +57,7 @@ class GameBoard extends Component {
         let boardRowArr = [];
         for (let i = 0; i <= 10; i++) {
             boardRowArr.push(<BoardRow
+                key={i}
                 row={i}
                 board={this.state.board}
                 clickSpot={this.clickSpot}
