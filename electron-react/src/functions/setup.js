@@ -49,7 +49,9 @@ function returnRandomShipPositions() {
     })
     let spotsTaken = [];
     while (spotsTaken.length < totalShipSpots) {
-        const randomSpot = returnRandomNumb(10) + "," + returnRandomNumb(10);
+        const x = returnRandomNumb(10);
+        const y = returnRandomNumb(10);
+        const randomSpot = `${x},${y}`;
         if (spotsTaken.indexOf(randomSpot) === -1) {
             let newShip = createShip(spotsTaken, randomSpot, ships[shipNumb]);
             if (newShip !== false) {
@@ -63,8 +65,6 @@ function returnRandomShipPositions() {
     }
     return spotsTaken;
 }
-
-
 
 function createShip(spotsTaken, randomSpot, shipLength) {
     if (spotsTaken.indexOf(randomSpot) !== -1) {
@@ -80,7 +80,7 @@ function createShip(spotsTaken, randomSpot, shipLength) {
     for (let i = 0; i < shipLength; i++) {
         if (createXShip) {
             let newSpot = `${x + i},${y}`;
-            if (spotsTaken.indexOf(newSpot)) {
+            if (spotsTaken.indexOf(newSpot) === -1 && !checkAdjacentSpotIsTaken(x + i, y, spotsTaken)) {
                 shipSpotsX.push(newSpot);
             }
             else {
@@ -90,7 +90,7 @@ function createShip(spotsTaken, randomSpot, shipLength) {
         }
         if (createYShip) {
             let newSpot = `${x},${y + i}`;
-            if (spotsTaken.indexOf(newSpot)) {
+            if (spotsTaken.indexOf(newSpot) === -1 && !checkAdjacentSpotIsTaken(x, y + i, spotsTaken)) {
                 shipSpotsY.push(newSpot);
             }
             else {
@@ -111,12 +111,25 @@ function createShip(spotsTaken, randomSpot, shipLength) {
     return false;
 }
 
+function checkAdjacentSpotIsTaken(x, y, spotsTaken) {
+    let adjacentSpots = [`${x + 1},${y}`, `${x + -1},${y}`, `${x},${y + 1}`, `${x},${y - 1}`];
+    for (let i = 0; i < adjacentSpots.length; i++) {
+        let spot = adjacentSpots[i];
+        if (spotsTaken.indexOf(spot) >= 0) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 module.exports = {
     setSpotText,
     setSpotClassName,
     setColLetter,
     returnRandomNumb,
     returnRandomShipPositions,
-    createShip
+    createShip,
+    checkAdjacentSpotIsTaken
     
 }

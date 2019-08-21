@@ -5,6 +5,7 @@ const setSpotClassName = require('../src/functions/setup').setSpotClassName;
 const setColLetter = require('../src/functions/setup').setColLetter;
 const returnRandomShipPositions = require('../src/functions/setup').returnRandomShipPositions;
 const createShip = require('../src/functions/setup').createShip;
+const checkAdjacentSpotIsTaken = require('../src/functions/setup').checkAdjacentSpotIsTaken;
 
 describe('Setup', function() {
     it('Set spot text for Row Headings', function() {
@@ -107,12 +108,34 @@ describe('Setup', function() {
     })
 
     describe("Don't create ship option if a spot in a ship placement already has a ship on it", function() {  
-        let spotsTaken = ['1,2'];
+        let spotsTaken = ['1,3'];
         let randomSpot = "1,1";
         let shipLength = 5;
         it('Expect 1 ship placement option to be created if a spot in a ship placement already has a ship on it', function() {
             expect(createShip(spotsTaken, randomSpot, shipLength)).to.eql([['1,1', '2,1', '3,1', '4,1', '5,1']]);
             expect(createShip(spotsTaken, randomSpot, shipLength)).to.have.lengthOf(1);
+        });
+    })
+
+    describe("Test Return random ship positions function", function() {  
+        it('Test if correct number of ships is returned', function() {
+            expect(returnRandomShipPositions()).to.have.lengthOf(17);
+        });
+    })
+
+    describe("Test preventing placing ships near each other", function() {  
+        let x = 1;
+        let y = 2;
+        let spotsTaken = ['1,3', '8,8'];
+        it('Test if adjecent ship returns true', function() {
+            expect(checkAdjacentSpotIsTaken(x, y, spotsTaken)).to.be.true;
+            expect(checkAdjacentSpotIsTaken(7, 8, spotsTaken)).to.be.true;
+            expect(checkAdjacentSpotIsTaken(8, 7, spotsTaken)).to.be.true;
+        });
+
+        it('Test if no adjecent ships returns false', function() {
+            expect(checkAdjacentSpotIsTaken(2, 2, spotsTaken)).to.be.false;
+            expect(checkAdjacentSpotIsTaken(7, 7, spotsTaken)).to.be.false;
         });
     })
 });
