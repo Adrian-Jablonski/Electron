@@ -48,28 +48,19 @@ function returnRandomShipPositions() {
         return sum + numb;
     })
     let spotsTaken = [];
-    let i = 0;
-    while (spotsTaken.length < totalShipSpots && i <= 40) {
-        i++;
-        //TODO: Fix while loop. i <= 20 prevents infinite loop
-        console.log(spotsTaken);
+    while (spotsTaken.length < totalShipSpots) {
         const randomSpot = returnRandomNumb(10) + "," + returnRandomNumb(10);
         if (spotsTaken.indexOf(randomSpot) === -1) {
-            console.log("Random Spot " + randomSpot);
             let newShip = createShip(spotsTaken, randomSpot, ships[shipNumb]);
-            console.log("NEW SHIP " + newShip)
-            // FIXME: Constantly trying to add the first random spot inside the create ship function even though the randomSpot logs as a different value to the console  
             if (newShip !== false) {
-                newShip[0].forEach((ship) => {
-                    console.log(ship)
+                newShip[returnRandomNumb(newShip.length - 1)].forEach((ship) => {
                     spotsTaken.push(ship);
-                    shipNumb ++;
                 })
+                shipNumb ++;
             }
             // spotsTaken.push(randomSpot);
         }
     }
-    console.log(spotsTaken)
     return spotsTaken;
 }
 
@@ -87,7 +78,6 @@ function createShip(spotsTaken, randomSpot, shipLength) {
     let createXShip = (x + shipLength) <= 10;
     let createYShip = (y + shipLength) <= 10;
     for (let i = 0; i < shipLength; i++) {
-        console.log("SHIP LENGTH", shipLength)
         if (createXShip) {
             let newSpot = `${x + i},${y}`;
             if (spotsTaken.indexOf(newSpot)) {
