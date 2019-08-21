@@ -4,6 +4,7 @@ const setSpotText = require('../src/functions/setup').setSpotText;
 const setSpotClassName = require('../src/functions/setup').setSpotClassName;
 const setColLetter = require('../src/functions/setup').setColLetter;
 const returnRandomShipPositions = require('../src/functions/setup').returnRandomShipPositions;
+const createShip = require('../src/functions/setup').createShip;
 
 describe('Setup', function() {
     it('Set spot text for Row Headings', function() {
@@ -43,10 +44,66 @@ describe('Setup', function() {
         expect(setColLetter(10)).to.equal('J');
     });
 
-    describe('Random Ship Position Tests', function() { 
-        it('Expect there to be the correct number of spots', function() {
-            expect(returnRandomShipPositions()).to.have.lengthOf(17);
+    describe('Create two ship placements if random spot for X and Y plus ship length is below 10', function() { 
+        let spotsTaken = [];
+        let randomSpot = [1, 1];
+        let shipLength = 5;
+        it('Expect two sets of arrays created', function() {
+            expect(createShip(spotsTaken, randomSpot, shipLength)).to.eql([[[1, 1], [2, 1], [3, 1], [4, 1], [5, 1]], [[1, 1], [1, 2], [1, 3], [1, 4], [1, 5]]]);
+            expect(createShip(spotsTaken, randomSpot, shipLength)).to.have.lengthOf(2);
+        });
+    })
+
+    describe("Don't create ship placement if random spot for X plus ship length is above 10", function() { 
+        let spotsTaken = [];
+        let randomSpot = [8, 2];
+        let shipLength = 3;
+        it('Expect array of length 1 to be created', function() {
+            expect(createShip(spotsTaken, randomSpot, shipLength)).to.eql([[[ 8, 2 ], [8, 3], [8, 4]]]);
+            expect(createShip(spotsTaken, randomSpot, shipLength)).to.have.lengthOf(1);
         })
+    })
+
+    describe("Don't create ship placement if random spot for Y plus ship length is above 10", function() { 
+        let spotsTaken = [];
+        let randomSpot = [1, 6];
+        let shipLength = 5;
+        it('Expect array of length 1 to be created', function() {
+            expect(createShip(spotsTaken, randomSpot, shipLength)).to.eql([[[ 1, 6 ], [2, 6], [3, 6], [4, 6], [5, 6]]]);
+            expect(createShip(spotsTaken, randomSpot, shipLength)).to.have.lengthOf(1);
+        })
+    })
+
+    describe("Don't create any ship placement if random spot for X AND Y plus ship length is above 10", function() { 
+        let spotsTaken = [];
+        let randomSpot = [1, 6];
+        let shipLength = 5;
+        it('Expect false to be returned if no ship placements available', function() {
+            expect(createShip(spotsTaken, randomSpot, shipLength)).to.eql([[[ 1, 6 ], [2, 6], [3, 6], [4, 6], [5, 6]]]);
+            expect(createShip(spotsTaken, randomSpot, shipLength)).to.have.lengthOf(1);
+        })
+    })
+
+    describe("Ship length tests", function() { 
+        let spotsTaken = [];
+        let randomSpot = [1, 6];
+        it('Expect ship of length 5 to be created', function() {
+            expect(createShip(spotsTaken, randomSpot, 5)[0]).to.have.lengthOf(5);
+        })
+        it('Expect ship of length 4 to be created', function() {
+            expect(createShip(spotsTaken, randomSpot, 4)[0]).to.have.lengthOf(4);
+        })
+        it('Expect ship of length 2 to be created', function() {
+            expect(createShip(spotsTaken, randomSpot, 2)[0]).to.have.lengthOf(2);
+        })
+    })
+
+    describe("Don't create any ship options if random spot already has a ship on it", function() {  
+        it('Expect false to be returned if random spot is already taken');
+    })
+
+    describe("Don't create ship option if a spot in a ship placement already has a ship on it", function() {  
+        it('Expect 1 ship placement option to be created if a spot in a ship placement already has a ship on it');
     })
     
 });

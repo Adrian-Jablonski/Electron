@@ -18,7 +18,7 @@ class GameBoard extends Component {
                 const colLetter = String.fromCharCode(j + 64);
                 board[colLetter + i] = {
                     "status": null,
-                    "hasShip" : spotsTaken.indexOf(`${i},${j}`) === -1
+                    "hasShip" : spotsTaken.indexOf(`${i},${j}`) !== -1
                 }
             }
         }

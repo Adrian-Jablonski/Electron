@@ -14,6 +14,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "mocha",
+    "test-watch" : "mocha --watch ./test ./",
     "test-watch-fail" : "mocha --reporter min --watch ./test ./",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"SET BROWSER=none&&yarn start\" \"wait-on http://localhost:3000 && electron .\""

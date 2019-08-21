@@ -50,36 +50,53 @@ function returnRandomShipPositions() {
     let spotsTaken = [];
 
     while (spotsTaken.length < totalShipSpots) {
+        console.log(spotsTaken);
         let randomSpot = returnRandomNumb(10) + "," + returnRandomNumb(10);
         if (spotsTaken.indexOf(randomSpot) === -1) {
             spotsTaken.push(randomSpot);
-            //checkFreeShipBuildingSpots(spotsTaken, randomSpot, ships[shipNumb])
         }
     }
-    console.log(spotsTaken);
+    //console.log(spotsTaken);
     return spotsTaken;
 }
 
-// function checkFreeShipBuildingSpots(spotsTaken, randomSpot, shipLength) {
-//     let consideredSpots = [];
-
-//     let randomSpotArr = randomSpot.split(',');
-//     console.log(randomSpotArr);
-//     for (let i = randomSpot[0]; i < randomSpot[0] + shipLength; i++) {
-//         let spots = [];
-//         if ()
-//     }
-//     //TODO: Set up ship spots aligned horizontally or vertically depending on available spots. Currently spots are being set randomly. Check if spots are available to the right or down only
 
 
+function createShip(spotsTaken, randomSpot, shipLength) {
+    let shipSpotsX = [];
+    let shipSpotsY = [];
+    let x = randomSpot[0];
+    let y = randomSpot[1];
+    let createXShip = (x + shipLength) <= 10;
+    let createYShip = (y + shipLength) <= 10;
+    for (let i = 0; i < shipLength; i++) {
+        if (createXShip) {
+            shipSpotsX.push([x + i, y]);
+        }
+        if (createYShip) {
+            shipSpotsY.push([x, y + i]);
+        }
+    }
 
-    
-// }
+
+    if (createXShip && createYShip) {
+        return [shipSpotsX, shipSpotsY];
+    }
+    else if (createXShip) {
+        return [shipSpotsX];
+    }
+    else if (createYShip) {
+        return [shipSpotsY];
+    }
+    return false;
+}
 
 module.exports = {
     setSpotText,
     setSpotClassName,
     setColLetter,
     returnRandomNumb,
-    returnRandomShipPositions
+    returnRandomShipPositions,
+    createShip
+    
 }
