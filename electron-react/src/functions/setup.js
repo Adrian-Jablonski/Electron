@@ -48,37 +48,67 @@ function returnRandomShipPositions() {
         return sum + numb;
     })
     let spotsTaken = [];
-
-    while (spotsTaken.length < totalShipSpots) {
+    let i = 0;
+    while (spotsTaken.length < totalShipSpots && i <= 40) {
+        i++;
+        //TODO: Fix while loop. i <= 20 prevents infinite loop
         console.log(spotsTaken);
-        let randomSpot = returnRandomNumb(10) + "," + returnRandomNumb(10);
+        const randomSpot = returnRandomNumb(10) + "," + returnRandomNumb(10);
         if (spotsTaken.indexOf(randomSpot) === -1) {
-            spotsTaken.push(randomSpot);
+            console.log("Random Spot " + randomSpot);
+            let newShip = createShip(spotsTaken, randomSpot, ships[shipNumb]);
+            console.log("NEW SHIP " + newShip)
+            // FIXME: Constantly trying to add the first random spot inside the create ship function even though the randomSpot logs as a different value to the console  
+            if (newShip !== false) {
+                newShip[0].forEach((ship) => {
+                    console.log(ship)
+                    spotsTaken.push(ship);
+                    shipNumb ++;
+                })
+            }
+            // spotsTaken.push(randomSpot);
         }
     }
-    //console.log(spotsTaken);
+    console.log(spotsTaken)
     return spotsTaken;
 }
 
 
 
 function createShip(spotsTaken, randomSpot, shipLength) {
+    if (spotsTaken.indexOf(randomSpot) !== -1) {
+        return false;
+    }
     let shipSpotsX = [];
     let shipSpotsY = [];
-    let x = randomSpot[0];
-    let y = randomSpot[1];
+    let randomSpotArr = randomSpot.split(',');
+    let x = Number(randomSpotArr[0]);
+    let y = Number(randomSpotArr[1]);
     let createXShip = (x + shipLength) <= 10;
     let createYShip = (y + shipLength) <= 10;
     for (let i = 0; i < shipLength; i++) {
+        console.log("SHIP LENGTH", shipLength)
         if (createXShip) {
-            shipSpotsX.push([x + i, y]);
+            let newSpot = `${x + i},${y}`;
+            if (spotsTaken.indexOf(newSpot)) {
+                shipSpotsX.push(newSpot);
+            }
+            else {
+                createXShip = false;
+                shipSpotsX = [];
+            }
         }
         if (createYShip) {
-            shipSpotsY.push([x, y + i]);
+            let newSpot = `${x},${y + i}`;
+            if (spotsTaken.indexOf(newSpot)) {
+                shipSpotsY.push(newSpot);
+            }
+            else {
+                createYShip = false;
+                shipSpotsY = [];
+            }
         }
     }
-
-
     if (createXShip && createYShip) {
         return [shipSpotsX, shipSpotsY];
     }
